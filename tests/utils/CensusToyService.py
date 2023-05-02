@@ -4,8 +4,9 @@ from enum import Enum
 
 
 class ActionType(Enum):
+    '''List of possible action values to be used for testing.'''
     CountByGender = "CountByGender"
-    CountByCoutry = "CountByCoutry"
+    CountByCountry = "CountByCountry"
     CountPasswordComplexity = "CountPasswordComplexity"
     Empty = ""
     Invalid = "NosuchAction"
@@ -44,7 +45,7 @@ class CensusToyService:
         return self._actionType
 
     @actionType.setter
-    def actionType(self, value):
+    def actionType(self, value: str):
         self._actionType = value
         if self.is_valid_json:
             self._set_actionType(value)
@@ -64,14 +65,14 @@ class CensusToyService:
         return self._json_data
 
 # Private things
-    def _set_actionType(self, value):
-        print("JSON DATA:\n", self._json_data)
+    def _set_actionType(self, value: str):
         self._json_data['actionType'] = value
 
     def _set_top(self, top):
         self._json_data['top'] = top
 
     def _retrieve_results(self):
+        print('JSON_DATA: ', self._json_data)
         if self.is_valid_json:
             response = self.post_toy_census_api(self._json_data)
         else:
