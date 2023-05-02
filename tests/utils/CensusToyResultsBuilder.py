@@ -10,10 +10,13 @@ class CensusToyResultsBuilder:
     '''
 
     def __init__(self, user_data):
+        ''' user_data is expected to be valid json format (aka Python Dictionary). 
+        '''
         self._json_data = user_data
 
 
 # Private methods
+
 
     def _get_gender_results(self):
         counts = {}
@@ -31,7 +34,7 @@ class CensusToyResultsBuilder:
         # sort to match  expectations
         results.sort(key=lambda x: x['value'], reverse=True)
 
-        print('EXPECTED RESULTS: ', results)
+        print('EXPECTED GENDER RESULTS: ', results)
 
         return results
 
@@ -44,14 +47,13 @@ class CensusToyResultsBuilder:
                 counts[user['nat']] += 1
             else:
                 counts[user['nat']] = 1
-
-        for nat, count in counts:
-            results.append({"name": nat, "value": count})
+        for key in counts:
+            results.append({"name": key, "value": counts[key]})
 
         # sort to match  expectations
         results.sort(key=lambda x: x['value'], reverse=True)
 
-        print('EXPECTED RESULTS: ', results)
+        print('EXPECTED COUNTRY RESULTS: ', results)
 
         return results
 
@@ -66,37 +68,43 @@ class CensusToyResultsBuilder:
             else:
                 counts[complexity] = 1
 
-        for complexity, count in counts:
-            results.append({"name": complexity, "value": count})
+        for key in counts:
+            results.append({"name": key, "value": counts[key]})
 
         # sort to match  expectations
         results.sort(key=lambda x: x['value'], reverse=True)
 
-        print('EXPECTED RESULTS: ', results)
+        print('EXPECTED PASSWORD COMPLEXITY RESULTS: ', results)
 
         return results
 
     def _calculate_complexity(self, password):
-        return len(password) - len(re.findall(r'[A-Za-z]{1}', password))
+        return len(password) - len(re.findall(r'[^\W\d_]{1}', password))
 
 # Public methods
-    def expected_gender_results(self, top):
+    def expected_gender_results(self, top=None):
         ''' Returns an array of dictionaries, each dictionary 
-            has two items, name (gender), and value (count)
+            has two items, name (gender), and value (count).
+            If top is None, returns the entire results.  Otherwise,
+            returns the first top results.            
         '''
         gender_counts = self._get_gender_results()
         return gender_counts[:top]
 
-    def expected_country_results(self, top):
+    def expected_country_results(self, top=None):
         ''' Returns an array of dictionaries, each dictionary 
             has two items, name (nat), and value (count)
+            If top is None, returns the entire results.  Otherwise,
+            returns the first top results.
         '''
         country_counts = self._get_country_results()
         return country_counts[:top]
 
-    def expected_password_complexity_results(self, top):
+    def expected_password_complexity_results(self, top=None):
         ''' Returns an array of dictionaries, each dictionary 
-            has two items, name (complexity), and value (count)
+            has two items, name (complexity), and value (count).
+            If top is None, returns the entire results.  Otherwise,
+            returns the first top results.
         '''
         country_counts = self._get_password_complexity_results()
         return country_counts[:top]

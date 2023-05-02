@@ -52,6 +52,5 @@ Why did I use python:
 bugs  - defines any issues encountered with the service under test (SUT).   Failing tests are marked with xfail.
 tests - test case code
 tests\testdata - test data files
-tests\tools - script(s) used for test prep and service exploration.
-tests\utils - class(es) used by the test harness
+tests\utils - class(es) used by the test harness, and some helper tools for creating test data.
 
