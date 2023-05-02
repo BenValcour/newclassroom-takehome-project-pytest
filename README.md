@@ -25,7 +25,7 @@ The testing approach is constrained to functional testing of the Census Toy Serv
 2. top property - This property was viewed as an  int value that  was valid for values > 0.   For all other values, the value was invalid (client error). For example values of -1 and 0 are expected to return a client error.  Performed boundary value testing for integer values (-1,0,1,2,n) Where n was relevant to the users data and the results generated. n == size(results), n < size(results), and n > size(results)
 3. users array - The length of the array must be > 0.   missing or empty users array is invalid (client error)  Array lengths of 1,2,n were tested.   Additionally, the testdata was modified for specific test cases to create an expectation to match the test case.   For example:  test data that would return count by country of 5 countries each with differing counts (for sort verification) was created.
 4. The content of the request (request body) - testing of this was for both valid and invalid json.  Invalid json formatted body should return a client error.
-5. The content of the response - 
+5. The content of the response - Verifying client errors, invalid requests/values, return an expected 400 level response.
 
 ### General testing includes:
 - For error cases for the properties consider:  missing, empty strings or arrays, and no value, (null)
@@ -53,4 +53,21 @@ bugs  - defines any issues encountered with the service under test (SUT).   Fail
 tests - test case code
 tests\testdata - test data files
 tests\utils - class(es) used by the test harness, and some helper tools for creating test data.
+
+### Classes of interest
+
+#### CensusToyService
+
+Provides an abstraction of the Census Toy Service implementation to hide API changes from the test.   The class does also provide the ability to specify 'raw'  HTTP POST request body content.   The later can be used for error testing. Such as sending invalid JSON content.
+
+#### CensusToyResultsBuilder
+
+Provides the expectations, which are calculated  at run time. Expectations are based on the content of the test data file, and the value of the optional **top** parameter.
+
+## To add more tests
+
+Most of the tests are data driven, thus adding new tests consists of creating a data set.
+In the utils folder there are the scripts: **get_testdata.py** and **get_expectations.py**.  
+- **get_testdata.py** can be used to create test data files that contain a json object that can be used to query the Census Toy Service.   
+- **get_expectations.py** takes an argument of a valid test data file and reports the expectations based on the data in the file.
 
