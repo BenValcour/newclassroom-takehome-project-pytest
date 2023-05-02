@@ -1,12 +1,12 @@
 # Issue:
 
-# Severity (Critical/Major/Minor/Low):
+## Severity (Critical/Major/Minor/Low):
 
-# Priority (High/Medium/Low):
+## Priority (High/Medium/Low):
 
-# Description:
+## Description:
 
-# Steps to reproduce:
+## Steps to reproduce:
 
 1.
 2.

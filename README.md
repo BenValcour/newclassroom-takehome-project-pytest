@@ -12,8 +12,8 @@ Tests were developed on a Windows 10 platform.  It is suggested you use same. To
 - python 3.11.2
 - pytest 7.2.2
 - requests 2.29.0
-3. position to the project folder, so that the tests folder is in the curent working directory.
-4. run pytest [-v]
+3. position to the project folder, so that the tests folder is in the current working directory.
+4. run pytest [-v|-rA], use **-rA** for detailed test output.
 
  ## Testing approach and assumptions
 
@@ -34,12 +34,13 @@ The testing approach is constrained to functional testing of the Census Toy Serv
 ###  Test assumptions
 
 - The "nat" property is the value used to control the  CountByCountry feature.  The "country" property in the location object is ignored as part of testing.
-- The value of the "password" property is assumed to be valid US keyboard input.
-- The users data may be incomplete.  That is, for a successful user response, the user object will have all properties present, but may contain properties with empty values.  For example, Users[0]["Gender"] might be null or an empty string.  These scenarios are considered for error cases and validating service behavior with missing/unepxected values.
+- The value of the "password" property is assumed to be valid keyboard input. Consideration is made for non-english passwords.
+- For CountPasswordComplexity results, it is assumed the name is the password, and the value is its complexity. It is assumed the result set should not contain duplicate name entries.
+- The users data may be incomplete.  That is, for a successful user response, the user object will have all properties present, but may contain properties with empty values.  For example, Users[0]["Gender"] might be null or an empty string.  These scenarios are considered for error cases and validating service behavior with missing/unexpected values.
 
  ## Implementation
 
-The tests are implemented using python/pytest with the requests module.   The test data is static and was created using the https://randomuser.me/api site for the initial data and then modified for specific test cases.
+The tests are implemented using python/pytest with the requests module.   The test data is static, located in the testdata folder, and was created using the https://randomuser.me/api site for the initial data and then modified for specific test cases.
 
 Why did I use python: 
 - Quick and simple to implement using open source SW
@@ -49,7 +50,7 @@ Why did I use python:
 - pytest gives a simple and well known reporting model
 - Python was one of the languages raised in the job description :-) 
 
-bugs  - defines any issues encountered with the service under test (SUT).   Failing tests are marked with xfail.
+bugs  - Potential defects. Defines any issues encountered with the service under test (SUT).   Failing tests are marked with xfail.
 tests - test case code
 tests\testdata - test data files
 tests\utils - class(es) used by the test harness, and some helper tools for creating test data.
@@ -69,5 +70,5 @@ Provides the expectations, which are calculated  at run time. Expectations are b
 Most of the tests are data driven, thus adding new tests consists of creating a data set.
 In the utils folder there are the scripts: **get_testdata.py** and **get_expectations.py**.  
 - **get_testdata.py** can be used to create test data files that contain a json object that can be used to query the Census Toy Service.   
-- **get_expectations.py** takes an argument of a valid test data file and reports the expectations based on the data in the file.
+- **get_expectations.py** takes an argument of a valid test data file, and optionally a value for the top parameter, and reports the expectations based on the data in the file.
 
