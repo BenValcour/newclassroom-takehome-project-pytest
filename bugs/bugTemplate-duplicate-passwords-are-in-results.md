@@ -15,7 +15,7 @@ Given a request with two users with the same password. Expecting the results to 
 Run the following test:
 
 ```
-pytest -rA tests/test_count_password_complexity.py::test_count_password_complexity[./tests/testdata/users_passwords_duplicate.dat-None-True]
+pytest -rA --runxfail  tests/test_count_password_complexity.py::test_count_password_complexity[./tests/testdata/users_passwords_duplicate.dat-None-True]
 
 ```
 

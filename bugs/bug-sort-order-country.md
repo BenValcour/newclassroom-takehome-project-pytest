@@ -20,7 +20,7 @@ Actual order reported is:  US, CA, BR
 Run the following test:
 
 ```
-pytest tests/test_top_param_country.py::test_top_param_country[./tests/testdata/users_3_CA_1_BG_2_US.dat-4-True]
+pytest --runxfail -rA tests/test_top_param_country.py::test_top_param_country[./tests/testdata/users_3_CA_1_BG_2_US.dat-4-True]
 ```
 
 

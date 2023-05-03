@@ -91,7 +91,7 @@ FAILED tests/test_top_param_gender.py::test_top_param_gender[./tests/testdata/us
 Run the following test repeatedly until a failure is observed:
 
 ```
-pytest -rA tests/test_top_param_gender.py::test_top_param_gender[./tests/testdata/users_2_female_1_male.dat-2-True]
+pytest -rA --runxfail  tests/test_top_param_gender.py::test_top_param_gender[./tests/testdata/users_2_female_1_male.dat-2-True]
 ```
 
 

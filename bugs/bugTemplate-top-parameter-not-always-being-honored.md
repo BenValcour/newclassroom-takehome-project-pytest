@@ -100,9 +100,11 @@ FAILED tests/test_top_param_password_complexity.py::test_top_param_password_comp
 ```
 ## Steps to reproduce:
 
-1.
-2.
-3.
+Run the following repeatedly:
+
+```
+pytest -rA --runxfail  tests/test_top_param_password_complexity.py::test_top_param_password_complexity[./tests/testdata/users_0100.dat-10-True]
+```
 
 
 

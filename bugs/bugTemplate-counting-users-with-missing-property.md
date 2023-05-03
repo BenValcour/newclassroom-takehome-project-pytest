@@ -31,7 +31,7 @@ pytest -rA tests/test_count_by_country.py::test_count_by_country[./tests/testdat
 or
 
 ```
-pytest -rA tests/test_count_by_gender.py::test_count_by_gender[./tests/testdata/users_no_genders.dat-None-True]
+pytest -rA --runxfail tests/test_count_by_gender.py::test_count_by_gender[./tests/testdata/users_no_genders.dat-None-True]
 ```
 
 
