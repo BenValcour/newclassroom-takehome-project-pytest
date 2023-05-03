@@ -1,5 +1,5 @@
 # newclassroom-takehome-project-pytest
- Qa automation engineer take home test pytest implementation.
+ QA automation engineer take home test pytest implementation.
 
  This project supports the testing of the Census Toy Service API as described in the project definition.
 
@@ -22,9 +22,13 @@ See the [bugs](bugs) folder for details:
 - The service does not respond with client errors status code (400) when a request is sent with invalid or missing required fields. 
 - For countByCountry the service will count users that do not have a 'nat' property. May not be an issue, as expected behavior is not defined for this case.
 
+### Comment on features
+
+- For security reasons, the countPasswordComplexity action should probably not be reporting passwords in the results. It might be of more value to report the complexity as the 'name' property, and the 'value' property as the frequency of complexity value occurring in the users array.  This would provide users with a sorted summary of how complex the passwords are for the given users array.  It would also be consistent with other service actionType behaviors.
+
 ## How to run
 
-Tests were developed on a Windows 10 platform.  It is suggested you use same. To run the tests:
+Tests were developed on a Windows 10 platform.  VS Code was used as the IDE. It is suggested you use same. To run the tests:
 
 1. clone the repo
 2. install the following python modules and versions
@@ -42,7 +46,7 @@ The testing approach is constrained to functional testing of the Census Toy Serv
 
 1. actionType property - This property was viewed as a string value that has 3 valid inputs and anything else would be invalid (client error).  
 2. top property - This property was viewed as an  int value that  was valid for values > 0.   For all other values, the value was invalid (client error). For example values of -1 and 0 are expected to return a client error.  Performed boundary value testing for integer values (-1,0,1,2,n) Where n was relevant to the users data and the results generated. n == size(results), n < size(results), and n > size(results)
-3. users array - The length of the array must be > 0.   missing or empty users array is invalid (client error)  Array lengths of 1,2,n were tested.   Additionally, the testdata was modified for specific test cases to create an expectation to match the test case.   For example:  test data that would return count by country of 5 countries each with differing counts (for sort verification) was created.
+3. users array - The length of the array must be > 0.   missing or empty users array is invalid (client error)  Array lengths of 1,2,n were tested.   Additionally, the test data was modified for specific test cases to create an expectation to match the test case.   For example:  test data that would return count by country of 5 countries each with differing counts (for sort verification) was created.
 4. The content of the request (request body) - testing of this was for both valid and invalid json.  Invalid json formatted body should return a client error.
 5. The content of the response - Verifying client errors, invalid requests/values, return an expected 400 level response.
 
@@ -52,21 +56,21 @@ The testing approach is constrained to functional testing of the Census Toy Serv
 
 ###  Test assumptions
 
-- The "nat" property is the value used to control the  CountByCountry feature.  The "country" property in the location object is ignored as part of testing.
-- The value of the "password" property is assumed to be valid keyboard input. Consideration is made for non-english passwords.
-- For CountPasswordComplexity results, it is assumed the name is the password, and the value is its complexity. It is assumed the result set should not contain duplicate name entries.
+- The "nat" property is the value used to control the  countByCountry action.  The "country" property in the "location" object is ignored as part of testing.
+- The value of the "password" property is assumed to be valid keyboard input. Consideration is made for testing of passwords that have non-English language alphabetic characters.
+- For countPasswordComplexity results, it is assumed the name is the password, and the value is its complexity. It is assumed the result set should not contain duplicate name entries.
 - The users data may be incomplete.  That is, for a successful user response, the user object will have all properties present, but may contain properties with empty values.  For example, Users[0]["Gender"] might be null or an empty string.  These scenarios are considered for error cases and validating service behavior with missing/unexpected values.
 
  ## Implementation
 
-The tests are implemented using python/pytest with the requests module.   The test data is static, located in the testdata folder, and was created using the https://randomuser.me/api site for the initial data and then modified for specific test cases.
+The tests are implemented using python/pytest with the requests module.   The test data is static, located in the test data folder, and was created using the https://randomuser.me/api site for the initial data and then modified for specific test cases.
 
 Why did I use python: 
-- Quick and simple to implement using open source SW
+- Quick and simple to implement using open-source SW
 - Supports the functional testing only assumption
 - Easy to share with others
 - requests module support submission of valid/invalid post requests
-- pytest gives a simple and well known reporting model
+- pytest gives a simple and well-known reporting model
 - Python was one of the languages raised in the job description :-) 
 
 bugs  - Potential defects. Defines any issues encountered with the service under test (SUT).   Failing tests are marked with xfail.
@@ -82,7 +86,7 @@ Provides an abstraction of the Census Toy Service implementation to hide API cha
 
 #### CensusToyResultsBuilder
 
-Provides the expectations, which are calculated  at run time. Expectations are based on the content of the test data file, and the value of the optional **top** parameter.
+Provides the expectations, which are calculated  at run time. Expectations are based on the content of the test data file, and the value of the optional **top** parameter.   Took this approach to avoid having implementation details in the actual test case code.  This provides a single location, class, that would have to be updated if/when minor changes in the service API  expectations are implemented.
 
 ## To add more tests
 
@@ -95,4 +99,8 @@ In the utils folder there are the scripts: **get_testdata.py** and **get_expecta
 
 - The tests were broken up into functional areas.   This resulted in some duplicate code within the test cases.  Probably worth a refactor.
 
-- The testdata files could be better organized.  A naming convention could be defined and used.
+- The two classes mentioned above also suffer from common boilerplate code.  Refactoring might be advised.
+
+- The test data files could be better organized.  A naming convention could be defined and used.
+
+- As there is a "contract" between the Census service and the format of the users object returned by the randomuser service, it would be of value to identify any breaking changes in the randomuser service.  A test case that confirms the  schema of the users data  from the randomuser service has not introduced a breaking change should be implemented.
