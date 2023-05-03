@@ -3,7 +3,26 @@
 
  This project supports the testing of the Census Toy Service API as described in the project definition.
 
- ## How to run
+## Test results
+
+### What works:
+
+- Each of the actionTypes work for general use cases.
+- The top parameter works for most requests.
+- The calculation of password complexity seems to work as expected.
+- Requests with 1000 and 5000 users was successfully processed.
+
+### What does not work:
+
+See the [bugs](bugs) folder for details:
+
+- The sorting of the results is not functional for countByCountry.  US seems to always have priority when present.
+- Occasionally, the service returns unexpected results. That is more or fewer results than expected.  On some occasions observed an empty results when non-empty was expected.
+- Duplicate passwords are reported for CountPasswordComplexity.  This might be by design, but seems inconsistent with other actionTypes
+- The service does not respond with client errors status code (400) when a request is sent with invalid or missing required fields. 
+- For countByCountry the service will count users that do not have a 'nat' property. May not be an issue, as expected behavior is not defined for this case.
+
+## How to run
 
 Tests were developed on a Windows 10 platform.  It is suggested you use same. To run the tests:
 
@@ -13,11 +32,11 @@ Tests were developed on a Windows 10 platform.  It is suggested you use same. To
 - pytest 7.2.2
 - requests 2.29.0
 3. position to the project folder, so that the tests folder is in the current working directory.
-4. run pytest [-v|-rA], use **-rA** for detailed test output.
+4. run pytest [-v|-rA], use **-rA** for detailed test output.  Use **--runxfail** to run tests marked as failed.
 
  ## Testing approach and assumptions
 
-The testing approach is constrained to functional testing of the Census Toy Service call.   This includes both positive and negative behaviors.   Testing does not include non-functional evaluation.  For example, no performance, load, reliability, or security testing was performed.
+The testing approach is constrained to functional testing of the Census Toy Service call.   This includes both positive and negative behaviors.  Testing approach looked at the domain of the inputs and applied boundary value test case.  Testing did not include non-functional evaluation.  For example, no performance, load, reliability, or security testing was performed.
 
 ### Five primary items were considered for testing:
 
@@ -72,3 +91,8 @@ In the utils folder there are the scripts: **get_testdata.py** and **get_expecta
 - **get_testdata.py** can be used to create test data files that contain a json object that can be used to query the Census Toy Service.   
 - **get_expectations.py** takes an argument of a valid test data file, and optionally a value for the top parameter, and reports the expectations based on the data in the file.
 
+## TODOs
+
+- The tests were broken up into functional areas.   This resulted in some duplicate code within the test cases.  Probably worth a refactor.
+
+- The testdata files could be better organized.  A naming convention could be defined and used.

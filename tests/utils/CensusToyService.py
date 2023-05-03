@@ -11,6 +11,8 @@ class ActionType(Enum):
     Empty = ""
     Invalid = "NosuchAction"
 
+# TODO - seems a lot of redundant code, refactor...
+
 
 class CensusToyService:
     '''Supports end to end testing of the Census Toy API service.
@@ -43,6 +45,7 @@ class CensusToyService:
 
 
 # Getters/Setters
+
 
     @property
     def actionType(self):
@@ -80,6 +83,7 @@ class CensusToyService:
 
 # Private things
 
+
     def _set_actionType(self, value: str):
         self._json_data['actionType'] = value
 
@@ -102,6 +106,7 @@ class CensusToyService:
 
 
 # Public things
+
 
     def retrieve_results(self):
         if self._is_valid_json:
