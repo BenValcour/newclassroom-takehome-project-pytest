@@ -59,7 +59,7 @@ The testing approach is constrained to functional testing of the Census Toy Serv
 - The "nat" property is the value used to control the  countByCountry action.  The "country" property in the "location" object is ignored as part of testing.
 - The value of the "password" property is assumed to be valid keyboard input. Consideration is made for testing of passwords that have non-English language alphabetic characters.
 - For countPasswordComplexity results, it is assumed the name is the password, and the value is its complexity. It is assumed the result set should not contain duplicate name entries.
-- The users data may be incomplete.  That is, for a successful user response, the user object will have all properties present, but may contain properties with empty values.  For example, Users[0]["Gender"] might be null or an empty string.  These scenarios are considered for error cases and validating service behavior with missing/unexpected values.
+- The users data may be incomplete.  That is, for a successful user response, the user object will have all properties present, but may contain properties with empty values.  For example, Users[0]["Gender"] might be null or an empty string.  These scenarios are considered for error cases and verifying service behavior with missing/unexpected values.
 
  ## Implementation
 
@@ -74,9 +74,12 @@ Why did I use python:
 - Python was one of the languages raised in the job description :-) 
 
 bugs  - Potential defects. Defines any issues encountered with the service under test (SUT).   Failing tests are marked with xfail.
-tests - test case code
-tests\testdata - test data files
-tests\utils - class(es) used by the test harness, and some helper tools for creating test data.
+
+#### Folders:
+
+- tests - test case code
+- tests\testdata - test data files
+- tests\utils - class(es) used by the test harness, and some helper tools for creating test data.
 
 ### Classes of interest
 
