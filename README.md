@@ -21,6 +21,7 @@ See the [bugs](bugs) folder for details:
 - Duplicate passwords are reported for CountPasswordComplexity.  This might be by design, but seems inconsistent with other actionTypes
 - The service does not respond with client errors status code (400) when a request is sent with invalid or missing required fields. 
 - For countByCountry the service will count users that do not have a 'nat' property. May not be an issue, as expected behavior is not defined for this case.
+- CountPasswordComplexity has difficulties  returning the proper complexity count,under certain conditions, when a backslash is part of the password.
 
 ### Comment on features
 

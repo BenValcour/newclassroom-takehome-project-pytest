@@ -2,6 +2,8 @@ import pytest
 from utils.CensusToyService import CensusToyService, ActionType
 from utils.CensusToyResultsBuilder import CensusToyResultsBuilder
 
+# users_password_char_classes.dat
+
 
 @pytest.mark.parametrize("data,top,is_successful",
                          [
@@ -16,6 +18,8 @@ from utils.CensusToyResultsBuilder import CensusToyResultsBuilder
                              ("./tests/testdata/user_no_password.dat", None, True),
                              pytest.param("./tests/testdata/users_passwords_duplicate.dat", None, True,
                                           marks=pytest.mark.xfail(reason="duplicate passwords are not de-duped.")),
+                             ("./tests/testdata/users_password_char_classes.dat", None, True),
+                             ("./tests/testdata/users_password_backslash_character.dat", None, True),
                              ("./tests/testdata/user_password_empty.dat", None, True)
                          ])
 def test_count_password_complexity(data, top, is_successful):
@@ -33,6 +37,7 @@ def test_count_password_complexity(data, top, is_successful):
         assert response.status_code != 200
     # expected
     expected = sut_oracle.expected_password_complexity_results(top)
+    print('RESPONSE: ', response.json())
     print('SIZE RESPONSE: ', len(response.json()))
     print('SIZE EXPECTED: ', len(expected))
     assert response.json() == expected

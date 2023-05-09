@@ -17,7 +17,6 @@ class CensusToyResultsBuilder:
 
 # Private methods
 
-
     def _get_gender_results(self):
         counts = {}
         results = []
@@ -75,7 +74,16 @@ class CensusToyResultsBuilder:
         return results
 
     def _calculate_complexity(self, password):
-        return len(password) - len(re.findall(r'[^\W\d_]{1}', password))
+        ''' calculate how many non alpha numeric values exist in the password.
+            'w'  is any alphanumeric (any language) including the underscore, '_".
+             However, "_" adds to the complexity calculation.
+            So then find "_" and add them back into the complexity calculation
+        '''
+        # return len(password) - len(re.findall(r'[^\W\d_]{1}', password))
+        alnum_and_underscores = len(re.findall(r'[\w]', password))
+        underscores_only = len(re.findall(r'[_]', password))
+        print(f"PASSWORD: \"{password}\", len(password)", len(password))
+        return len(password) - alnum_and_underscores + underscores_only
 
 # Public methods
     def expected_gender_results(self, top=None):
