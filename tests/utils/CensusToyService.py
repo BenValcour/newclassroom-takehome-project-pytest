@@ -46,7 +46,6 @@ class CensusToyService:
 
 # Getters/Setters
 
-
     @property
     def actionType(self):
         return self._actionType
@@ -83,7 +82,6 @@ class CensusToyService:
 
 # Private things
 
-
     def _set_actionType(self, value: str):
         self._json_data['actionType'] = value
 
@@ -107,10 +105,9 @@ class CensusToyService:
 
 # Public things
 
-
     def retrieve_results(self):
         if self._is_valid_json:
-            print('REQUEST_DATA(valid): ', self._json_data)
+            # print('REQUEST_DATA(valid): ', self._json_data)
             response = self._post_toy_census_api(self._json_data)
         else:
             # print('REQUEST_DATA(invalid): ', self._test_data)

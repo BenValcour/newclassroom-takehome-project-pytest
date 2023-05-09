@@ -16,16 +16,17 @@
 
 See the [bugs](bugs) folder for details:
 
-- The sorting of the results is not functional for countByCountry.  US seems to always have priority when present.
-- Occasionally, the service returns unexpected results. That is more or fewer results than expected.  On some occasions observed an empty results when non-empty was expected.
+- The sorting of the results is not functional for CountByCountry.  US seems to always have priority when present.
+- Occasionally, the service returns unexpected results. That is more or fewer results than expected.  On some occasions observed an empty results when non-empty was expected. As this is not consistent, tests have not been marked as **xfail**, and random failures may be observed.
 - Duplicate passwords are reported for CountPasswordComplexity.  This might be by design, but seems inconsistent with other actionTypes
 - The service does not respond with client errors status code (400) when a request is sent with invalid or missing required fields. 
-- For countByCountry the service will count users that do not have a 'nat' property. May not be an issue, as expected behavior is not defined for this case.
-- CountPasswordComplexity has difficulties  returning the proper complexity count,under certain conditions, when a backslash is part of the password.
+- For CountByCountry the service will count users that do not have a 'nat' property. May not be an issue, as expected behavior is not defined for this case.
+- CountPasswordComplexity is including  numeric characters [0-9] in the complexity calculation.
+- CountPasswordComplexity has difficulties returning the proper complexity count, under certain conditions, when a backslash is part of the password.
 
 ### Comment on features
 
-- For security reasons, the countPasswordComplexity action should probably not be reporting passwords in the results. It might be of more value to report the complexity as the 'name' property, and the 'value' property as the frequency of complexity value occurring in the users array.  This would provide users with a sorted summary of how complex the passwords are for the given users array.  It would also be consistent with other service actionType behaviors.
+- For security reasons, the CountPasswordComplexity action should probably not be reporting passwords in the results. It might be of more value to report the complexity as the 'name' property, and the 'value' property as the frequency of complexity value occurring in the users array.  This would provide users with a sorted summary of how complex the passwords are for the given users array.  It would also be consistent with other service actionType behaviors.
 
 ## How to run
 

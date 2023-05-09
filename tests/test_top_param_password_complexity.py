@@ -5,11 +5,13 @@ from utils.CensusToyResultsBuilder import CensusToyResultsBuilder
 
 @pytest.mark.parametrize("data,top,is_successful",
                          [
-                             ("./tests/testdata/users_1_password_complexity.dat", None, True),
-                             ("./tests/testdata/users_multi_with_dups_password_complexities.dat", None, True),
-                             ("./tests/testdata/users_non_english_password_complexity.dat", None, True),
-                             ("./tests/testdata/users_all_US_keyboard_nonalpha_complexity.dat", None, True),
-                             ("./tests/testdata/users_0100.dat", 10, True)
+                             ("./tests/testdata/users_0010.dat", None, True),
+                             ("./tests/testdata/users_0010.dat", 10, True),
+                             ("./tests/testdata/users_0010.dat", 11, True),
+                             ("./tests/testdata/users_0010.dat", 9, True),
+                             ("./tests/testdata/users_0010.dat", 1, True),
+                             ("./tests/testdata/users_0010.dat", 0, True),
+                             ("./tests/testdata/users_0010.dat", -1, True)
 
                          ])
 def test_top_param_password_complexity(data, top, is_successful):
